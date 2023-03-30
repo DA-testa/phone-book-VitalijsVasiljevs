@@ -1,47 +1,60 @@
-# python3
+#221RDB265 Vitalijs Vasiljevs
+# P.s. Kad es apstiprinaju uzdevumu un apskatiju to, konstatēju, ka mans kods jau ir pilnībā pabeigts. 
+# Es nezinu, vai tas bija tā plānots vai nē, uzdevuma nosacījumos par to nekas nav rakstīts.
+# Tāpēc es izdzēsu visu veco kodu, kas nebija mans, un uzrakstīju savu no nulles.
+import re
 
-class Query:
-    def __init__(self, query):
-        self.type = query[0]
-        self.number = int(query[1])
-        if self.type == 'add':
-            self.name = query[2]
+phoneNumbers = {}
+def find(number, fromMain):
+    global phoneNumbers
+    if number in phoneNumbers:
+        if fromMain:
+            print(phoneNumbers[number])
+        return True
+    else:
+        if fromMain:
+            print("not found")
+        return False
+    
+def printPhones():
+    for number in phoneNumbers:
+        print(number + " " + phoneNumbers[number])
 
-def read_queries():
-    n = int(input())
-    return [Query(input().split()) for i in range(n)]
+def add(number, name):
+    global phoneNumbers
+    if find(number, False):
+        delete(number, True)
+    phoneNumbers[number] = name
+    return
 
-def write_responses(result):
-    print('\n'.join(result))
 
-def process_queries(queries):
-    result = []
-    # Keep list of all existing (i.e. not deleted yet) contacts.
-    contacts = []
-    for cur_query in queries:
-        if cur_query.type == 'add':
-            # if we already have contact with such number,
-            # we should rewrite contact's name
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    contact.name = cur_query.name
-                    break
-            else: # otherwise, just add it
-                contacts.append(cur_query)
-        elif cur_query.type == 'del':
-            for j in range(len(contacts)):
-                if contacts[j].number == cur_query.number:
-                    contacts.pop(j)
-                    break
+def delete(number, fromAdd):
+    global phoneNumbers
+    if fromAdd:
+        del phoneNumbers[number]
+    elif find(number, False):
+        del phoneNumbers[number]
+    return 
+    
+
+
+def main():
+    countComands = int(re.sub("[\r\n]", "", input()))
+    for i in range(countComands):
+        comandsList = []
+        comandsList = re.sub("[\r\n]", "", input()).split()
+        comand = comandsList[0].lower()
+        if comand == "add":
+            add(comandsList[1], comandsList[2])
+        elif comand == "del":
+            delete(comandsList[1], False)
+        elif comand == "find":
+            find(comandsList[1], True)
+        elif comand == "print":
+            printPhones()
         else:
-            response = 'not found'
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    response = contact.name
-                    break
-            result.append(response)
-    return result
-
-if __name__ == '__main__':
-    write_responses(process_queries(read_queries()))
-
+            printPhones("wrong command")
+        
+        
+if __name__ == "__main__":
+    main()
