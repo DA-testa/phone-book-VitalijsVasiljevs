@@ -23,7 +23,7 @@ def process_queries(queries):
             # if we already have contact with such number,
             # we should rewrite contact's name
             for contact in contacts:
-                if contact.number == cur_query.number:
+                if contact.number == cur_query.number: 
                     contact.name = cur_query.name
                     break
             else: # otherwise, just add it
