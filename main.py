@@ -1,3 +1,7 @@
+#221RDB265 Vitalijs Vasiljevs
+# P.s. Kad es apstiprinaju uzdevumu un apskatiju to, konstatēju, ka mans kods jau ir pilnībā pabeigts. 
+# Es nezinu, vai tas bija tā plānots vai nē, uzdevuma nosacījumos par to nekas nav rakstīts.
+# Tāpēc es izdzēsu visu veco kodu, kas nebija mans, un uzrakstīju savu no nulles.
 import re
 
 phoneNumbers = {}
